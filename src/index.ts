@@ -1,31 +1,22 @@
 import "reflect-metadata";
-import {createConnection,  getRepository, Repository} from "typeorm";
-import {User} from "./entity/User";
+import {createConnection, getRepository, Repository} from "typeorm";
 import express from "express"
 const app: express.Express = express()
+createConnection();
+
+import userRoutes from './routes/userRoutes'
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// const manager = getConnectionManager().get('your_orm_name');
+// const repository = manager.getRepository<AModel>(Model);
+
+app.use(userRoutes);
 
 app.listen(3000, () => {
     console.log("Start on port 3000.")
 })
 
-type User2 = {
-    id: number
-    name: string
-    email: string
-};
-
-const users2: User2[] = [
-    { id: 1, name: "User1", email: "user1@test.local" },
-    { id: 2, name: "User2", email: "user2@test.local" },
-    { id: 3, name: "User3", email: "user3@test.local" }
-]
-
-//一覧取得
-app.get('/users', (req: express.Request, res: express.Response) => {
-    res.send(JSON.stringify(users2))
-})
 
 // const createUser = async (userRepository: Repository<User>) => {
 //   console.log("### Create ###")
@@ -43,16 +34,16 @@ app.get('/users', (req: express.Request, res: express.Response) => {
 //   })
 // }
 
-const readUser = async (userRepository: Repository<User>) => {
-  console.log("### Read ###")
+// const readUser = async (userRepository: Repository<User>) => {
+//   console.log("### Read ###")
 
-  const users = await userRepository.find()
-  console.log(`All Users: ${JSON.stringify(users)}`)
+//   const users = await userRepository.find()
+//   console.log(`All Users: ${JSON.stringify(users)}`)
 
 
 //   const user = await userRepository.findOne({firstName: "Taro"})
 //   console.log(`Select User: ${JSON.stringify(user)}`)
-}
+// }
 
 // const updateUser = async (userRepository: Repository<User>) => {
 //   console.log("### Update ###")
@@ -77,14 +68,14 @@ const readUser = async (userRepository: Repository<User>) => {
 //   console.log(`All Users: ${JSON.stringify(users)}`)
 // }
 
-(async () => {
-  const connection = await createConnection()
+// (async () => {
+//   const connection = await createConnection()
 
-  const userRepository = getRepository(User)
+//   const userRepository = getRepository(User)
 //   await createUser(userRepository)
-  await readUser(userRepository)
+  // await readUser(userRepository)
 //   await updateUser(userRepository)
 //   await deleteUser(userRepository)
 
-  await connection.close()
-})()
+  // await connection.close()
+// })()
