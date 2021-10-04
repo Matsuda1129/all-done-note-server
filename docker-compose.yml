@@ -1,20 +1,19 @@
-version: "3.3"
+version: '3.3'
 services:
-
   server:
     build:
       context: .
       dockerfile: ./Dockerfile.server
     container_name: node_adns
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - .:/adns
-      - '/adns/node_modules'
+      # - '/adns/node_modules'
     tty: true
     depends_on:
       - mysql
-    command: npm start
+    command: npm run start:dev
 
   mysql:
     image: mysql:5.7
@@ -22,7 +21,7 @@ services:
     container_name: mysql_adns
     env_file: ./mysql/mysql.env
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - my-db:/var/lib/mysql
       - ./mysql/conf:/etc/mysql/conf.d/:ro

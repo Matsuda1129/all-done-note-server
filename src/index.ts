@@ -1,81 +1,38 @@
-import "reflect-metadata";
-import {createConnection, getRepository, Repository} from "typeorm";
-import express from "express"
-const app: express.Express = express()
-createConnection();
+import { Context, Handler, APIGatewayProxyHandler } from 'aws-lambda';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { Server } from 'http';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import * as serverless from 'aws-serverless-express';
+import * as express from 'express';
 
-import userRoutes from './routes/userRoutes'
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+let cachedServer: Server;
 
-// const manager = getConnectionManager().get('your_orm_name');
-// const repository = manager.getRepository<AModel>(Model);
+const bootstrapServer = async (): Promise<Server> => {
+  const expressApp = express();
+  const adapter = new ExpressAdapter(expressApp);
+  const app = await NestFactory.create(AppModule, adapter);
+  app.enableCors();
+  app.init();
+  return serverless.createServer(expressApp);
+};
 
-app.use(userRoutes);
+export const handler: any= (event, context ) => {
+  if (!cachedServer) {
+    bootstrapServer().then((server) => {
+      cachedServer = server;
+      return serverless.proxy(server, event, context);
+    });
+  } else {
+    return serverless.proxy(cachedServer, event, context);
+  }
+};
 
-app.listen(3000, () => {
-    console.log("Start on port 3000.")
-})
-
-
-// const createUser = async (userRepository: Repository<User>) => {
-//   console.log("### Create ###")
-
-//   await userRepository.insert({
-//     firstName: "Taro",
-//     lastName: "Yamada",
-//     age: 25
-//   })
-
-//   await userRepository.save({
-//     firstName: "Saki",
-//     lastName: "Suzuki",
-//     age: 40
-//   })
-// }
-
-// const readUser = async (userRepository: Repository<User>) => {
-//   console.log("### Read ###")
-
-//   const users = await userRepository.find()
-//   console.log(`All Users: ${JSON.stringify(users)}`)
-
-
-//   const user = await userRepository.findOne({firstName: "Taro"})
-//   console.log(`Select User: ${JSON.stringify(user)}`)
-// }
-
-// const updateUser = async (userRepository: Repository<User>) => {
-//   console.log("### Update ###")
-
-//   await userRepository.update({lastName: "Suzuki"}, {age: 23})
-
-//   const userTaro = await userRepository.findOne({firstName: "Taro"})
-//   userTaro.age = 30
-//   await userRepository.save(userTaro)
-
-//   const users = await userRepository.find()
-//   console.log(`All Users: ${JSON.stringify(users)}`)
-// }
-
-// const deleteUser = async (userRepository: Repository<User>) => {
-//   console.log("### Delete ###")
-
-//   const userTaro = await userRepository.findOne({firstName: "Taro"})
-//   await userRepository.remove(userTaro)
-
-//   const users = await userRepository.find()
-//   console.log(`All Users: ${JSON.stringify(users)}`)
-// }
-
-// (async () => {
-//   const connection = await createConnection()
-
-//   const userRepository = getRepository(User)
-//   await createUser(userRepository)
-  // await readUser(userRepository)
-//   await updateUser(userRepository)
-//   await deleteUser(userRepository)
-
-  // await connection.close()
-// })()
+// export const handler: APIGatewayProxyHandler = async (event, context) => {
+//   if (!cachedServer) {
+//     cachedServer = await bootstrapServer();
+//   }
+//   const result = await serverless.proxy(cachedServer, event, context, 'PROMISE')
+//     .promise;
+//   return result;
+// };
