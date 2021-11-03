@@ -6,7 +6,7 @@ services:
       dockerfile: ./Dockerfile.server
     container_name: node_adns
     ports:
-      - '3000:3000'
+      - '8000:8000'
     volumes:
       - .:/adns
       # - '/adns/node_modules'

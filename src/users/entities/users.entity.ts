@@ -12,7 +12,7 @@ export class User {
   id: number;
 
   @Column({ type: 'varchar', length: 20, nullable: false })
-  username: string;
+  name: string;
 
   @Column({ type: 'varchar', length: 150 })
   email: string;
@@ -31,6 +31,9 @@ export class User {
 
   @Column({ type: 'varchar', length: 100, nullable: true })
   sex: string;
+
+  @Column({ nullable: true })
+  birthday: Date;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   readonly createdAt?: Date;

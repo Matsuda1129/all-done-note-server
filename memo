@@ -1,2 +1,15 @@
 docker exec -it mysql_adns bash
 mysql -u root -p
+qloOMUPsXbtPL6Pm
+{
+    "type": "mysql",
+    "host": "mysql",
+    "port": 3306,
+    "username": "takuya",
+    "password": "secret",
+    "database": "all_done_note",
+    "entities": ["dist/entities/**/*.entity.js"],
+    "migrations": ["dist/migrations/**/*.js"],
+    "autoLoadEntities": true,
+    "synchronize": true
+}

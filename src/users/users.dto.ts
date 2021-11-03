@@ -1,13 +1,12 @@
 import { IsNotEmpty, IsString, IsBoolean, IsEnum } from 'class-validator';
-import { UserSex } from './user.enum';
+import { UserSex } from './users.enum';
 import { EnumToString } from 'src/helpers/enumToString';
 import { OmitType, PartialType } from '@nestjs/mapped-types';
 
 export class CreateUserDTO {
-  // 空文字NG，string型指定
   @IsNotEmpty()
   @IsString()
-  username: string;
+  name: string;
 
   @IsNotEmpty()
   @IsString()

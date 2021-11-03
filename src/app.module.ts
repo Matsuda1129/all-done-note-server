@@ -1,25 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmConfigService } from './config/typeorm-config.service';
+import { UsersModule } from './users/users.module';
+import { PostsModule } from './posts/posts.module';
+import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'all-done-note-dev-mysql-standalone.crrujeakot0e.ap-northeast-1.rds.amazonaws.com',
-      port: 3306,
-      username: 'admin',
-      password: 'qloOMUPsXbtPL6Pm',
-      database: 'tastylog',
-      entities: [__dirname + './**/**/*entity{.ts,.js}'],
-      autoLoadEntities: true,
-      synchronize: true,
+    ConfigModule.forRoot({
+      envFilePath: [`.env/${process.env.NODE_ENV}.env`, '.env/default.env'],
+      isGlobal: true,
     }),
-    UserModule,
+    // TypeORMの設定を非同期取得に変更
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: TypeOrmConfigService,
+    }),
+    PostsModule,
+    UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

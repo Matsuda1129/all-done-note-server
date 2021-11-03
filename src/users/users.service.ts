@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from 'src/user/entities/user.entity';
-import { Repository, InsertResult, UpdateResult, DeleteResult } from 'typeorm';
+import { User } from 'src/users/entities/users.entity';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDTO, EditUserDto} from './user.dto';
+import { CreateUserDTO, EditUserDto } from './users.dto';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
@@ -15,29 +15,33 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  // テーブルにアイテムを追加する関数を定義
   async createOne(dto: CreateUserDTO) {
     const user = await this.userRepository.create(dto as any);
     return await this.userRepository.save(user);
   }
 
-  // idを指定してテーブルから1件のデータを取得する関数を定義
-  async findOne(id: number) {
+  async findOneId(id: number) {
     const user = await this.userRepository.findOne(id);
     if (!user) throw new NotFoundException('User does not exist');
     return user;
   }
 
-  // idを指定してテーブルのデータを更新する関数を定義
-  async update(id: number, dto : EditUserDto) {
+  async update(id: number, dto: EditUserDto) {
     const user = await this.userRepository.findOne(id);
     if (!user) throw new NotFoundException('User does not exist');
     const editedUser = Object.assign(user, dto);
     return await this.userRepository.save(editedUser);
   }
 
-  //  idを指定してテーブルのデータを削除する関数を定義
-  async deleteOne(id: number){
+  async deleteOne(id: number) {
     return await this.userRepository.delete(id);
+  }
+
+  async create(data: any) {
+    return this.userRepository.save(data);
+  }
+
+  async findOne(condition: any): Promise<User> {
+    return this.userRepository.findOne(condition);
   }
 }
