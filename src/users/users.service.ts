@@ -1,9 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from 'src/users/entities/users.entity';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { User } from './entities/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDTO, EditUserDto } from './users.dto';
-
+import { CreateUserDto, EditUserDto } from './users.dto';
 @Injectable()
 export class UsersService {
   constructor(
@@ -12,18 +11,21 @@ export class UsersService {
   ) {}
 
   async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+    const users = await this.userRepository.find();
+    for (var i = 0; i < users.length; i++) {
+      delete users[i].password;
+    }
+    console.log(users);
+    return users;
   }
 
-  async createOne(dto: CreateUserDTO) {
-    const user = await this.userRepository.create(dto as any);
+  async createOne(dto: CreateUserDto) {
+    const emailExist = await this.userRepository.findOne({ email: dto.email });
+    if (emailExist) throw new BadRequestException('User already registered with email');
+    const nameExist = await this.userRepository.findOne({ name: dto.name });
+    if (nameExist) throw new BadRequestException('User already registered with name');
+    const user = await Object.assign(dto);
     return await this.userRepository.save(user);
-  }
-
-  async findOneId(id: number) {
-    const user = await this.userRepository.findOne(id);
-    if (!user) throw new NotFoundException('User does not exist');
-    return user;
   }
 
   async update(id: number, dto: EditUserDto) {
@@ -41,7 +43,7 @@ export class UsersService {
     return this.userRepository.save(data);
   }
 
-  async findOne(condition: any): Promise<User> {
-    return this.userRepository.findOne(condition);
+  async findOne(data: any): Promise<User> {
+    return this.userRepository.findOne(data);
   }
 }

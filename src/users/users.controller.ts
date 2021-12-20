@@ -10,102 +10,105 @@ import {
   Res,
   Req,
   UnauthorizedException,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDTO, EditUserDto } from './users.dto';
+import { EditUserDto, CreateUserDto } from './users.dto';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth('token')
+@ApiTags('user')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UsersService, private jwtService: JwtService) {}
+  constructor(private readonly usersService: UsersService, private jwtService: JwtService) {}
 
   @Post('register')
   async register(
     @Body('name') name: string,
     @Body('email') email: string,
     @Body('password') password: string,
+    @Body(ValidationPipe) dto: CreateUserDto,
   ) {
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    const user = await this.userService.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
-    delete user.password;
-
-    return user;
+    try {
+      const hashedPassword = await bcrypt.hash(password, 12);
+      return await this.usersService.createOne({
+        name: name,
+        email: email,
+        alive: true,
+        password: hashedPassword,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   @Post('login')
   async login(
-    @Req() req: Request,
     @Body('email') email: string,
     @Body('password') password: string,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) res: Response,
   ) {
-    const user = await this.userService.findOne({ email });
+    try {
+      const user = await this.usersService.findOne({ email });
+      if (!user) {
+        throw new BadRequestException('invalid credentials');
+      }
 
-    if (!user) {
-      throw new BadRequestException('invalid credentials');
+      const compared = await bcrypt.compareSync(password, user.password);
+      if (!compared) {
+        throw new BadRequestException('invalid credentials');
+      }
+      const jwt = await this.jwtService.signAsync({ id: user.id });
+      res.json({ jwt: jwt });
+    } catch (error) {
+      console.log(error);
     }
-
-    if (await bcrypt.compare(password, user.password)) {
-      throw new BadRequestException('invalid credentials');
-    }
-    const cookie = req.cookies['jwt'];
-    const jwt = await this.jwtService.signAsync({ id: user.id });
-
-    response.cookie('jwt', jwt, { httpOnly: true });
-    response.cookie('signedIn', 'true');
-    return cookie;
   }
 
   @Get('cookie')
   async cookie(@Req() req: Request) {
     try {
-      const cookie = req.cookies['jwt'];
+      const cookie = await req.headers.authorization.split('Bearer ')[1];
       const data = await this.jwtService.verifyAsync(cookie);
       if (!data) {
         throw new UnauthorizedException();
       }
-
-      const user = await this.userService.findOne({ id: data['id'] });
-      console.log(user);
-
+      const user = await this.usersService.findOne({ id: data['id'] });
       const { password, ...result } = user;
       return result;
     } catch (e) {
+      console.log(e);
       throw new UnauthorizedException();
     }
   }
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Get()
-  async getUserList() {
-    return await this.userService.findAll();
+  async findAllUser() {
+    return await this.usersService.findAll();
   }
 
   @UseGuards(AuthGuard)
-  @Get(':id')
-  async getUser(@Param('id') id: string) {
-    return await this.userService.findOneId(Number(id));
+  @Get(':name')
+  async findUserByName(@Param('name') name: string) {
+    return await this.usersService.findOne({ name });
   }
 
   @UseGuards(AuthGuard)
   @Put(':id')
-  update(@Param('id') id: number, @Body() dto: EditUserDto) {
-    return this.userService.update(id, dto);
+  async update(@Param('id') id: number, @Body(ValidationPipe) dto: EditUserDto) {
+    return this.usersService.update(id, dto);
   }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
-  deleteOne(@Param('id') id: number) {
-    const result = this.userService.deleteOne(id);
+  async deleteOne(@Param('id') id: number) {
+    const result = this.usersService.deleteOne(id);
     return {
       message: 'success deleted',
       result,
