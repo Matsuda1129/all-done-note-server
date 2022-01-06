@@ -13,16 +13,13 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { EditUserDto, CreateUserDto } from './users.dto';
+import { EditUserDto, CreateUserDto, EditUserPicture } from './users.dto';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiBearerAuth('token')
-@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly usersService: UsersService, private jwtService: JwtService) {}
@@ -87,7 +84,6 @@ export class UserController {
     }
   }
 
-  // @UseGuards(AuthGuard)
   @Get()
   async findAllUser() {
     return await this.usersService.findAll();
@@ -103,6 +99,12 @@ export class UserController {
   @Put(':id')
   async update(@Param('id') id: number, @Body(ValidationPipe) dto: EditUserDto) {
     return this.usersService.update(id, dto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('/:id/picture')
+  async updatePicture(@Param('id') id: number, @Body() dto: EditUserPicture) {
+    return this.usersService.updatePicture(id, dto);
   }
 
   @UseGuards(AuthGuard)

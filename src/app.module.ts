@@ -5,6 +5,8 @@ import { TypeOrmConfigService } from './config/typeorm-config.service';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { LikesModule } from './likes/likes.module';
+import { FollowersModule } from './followers/followers.module';
+import { TodosModule } from './todo/todos.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -17,7 +19,9 @@ import { LikesModule } from './likes/likes.module';
     }),
     UsersModule,
     PostsModule,
-    LikesModule
+    LikesModule,
+    FollowersModule,
+    TodosModule,
   ],
 })
 export class AppModule {}

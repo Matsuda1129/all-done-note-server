@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PostsController } from './posts.controller';
 import { PostsService } from './posts.service';
-import { PostEntity } from './entities/posts.entity';
+import { PostEntity } from '../entities/posts.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 

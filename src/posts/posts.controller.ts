@@ -15,11 +15,8 @@ import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth.guard';
 import { CreatePostDto } from './posts.dto';
 import { Pagination } from 'nestjs-typeorm-paginate';
-import { PostEntity } from './entities/posts.entity';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-@ApiBearerAuth('token')
+import { PostEntity } from '../entities/posts.entity';
 @UseGuards(AuthGuard)
-@ApiTags('post')
 @Controller('post')
 export class PostsController {
   constructor(private readonly postService: PostsService, private jwtService: JwtService) {}

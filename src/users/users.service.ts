@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { User } from './entities/users.entity';
+import { User } from '../entities/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto, EditUserDto } from './users.dto';
+import { CreateUserDto, EditUserDto, EditUserPicture } from './users.dto';
 @Injectable()
 export class UsersService {
   constructor(
@@ -15,7 +15,6 @@ export class UsersService {
     for (var i = 0; i < users.length; i++) {
       delete users[i].password;
     }
-    console.log(users);
     return users;
   }
 
@@ -29,6 +28,13 @@ export class UsersService {
   }
 
   async update(id: number, dto: EditUserDto) {
+    const user = await this.userRepository.findOne(id);
+    if (!user) throw new NotFoundException('User does not exist');
+    const editedUser = Object.assign(user, dto);
+    return await this.userRepository.save(editedUser);
+  }
+
+  async updatePicture(id: number,dto: EditUserPicture) {
     const user = await this.userRepository.findOne(id);
     if (!user) throw new NotFoundException('User does not exist');
     const editedUser = Object.assign(user, dto);

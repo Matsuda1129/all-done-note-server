@@ -1,23 +1,23 @@
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
-export class LikeDto {
+export class FollowerDto {
   @IsNotEmpty()
   @IsNumber()
   userId: number;
 
   @IsNotEmpty()
   @IsNumber()
-  postId: number;
+  followerId: number;
 }
 
-export class LikeUserIdDto {
+export class FollowerCountDto {
+  @IsNotEmpty()
+  @IsNumber()
+  followerId: number;
+}
+
+export class FollowingCountDto {
   @IsNotEmpty()
   @IsNumber()
   userId: number;
-}
-
-export class LikePostIdDto {
-  @IsNotEmpty()
-  @IsNumber()
-  postId: number;
 }

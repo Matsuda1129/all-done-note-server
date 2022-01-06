@@ -1,5 +1,5 @@
-import { PostEntity } from 'src/posts/entities/posts.entity';
-import { User } from '../../users/entities/users.entity';
+import { PostEntity } from 'src/entities/posts.entity';
+import { User } from './users.entity';
 import {
   Entity,
   Column,
@@ -32,7 +32,11 @@ export class Like {
   @JoinTable()
   post: PostEntity;
 
-  @ManyToOne(() => User, (user) => user.likes)
+  @ManyToOne(() => User, (user) => user.likes, {
+    nullable: false,
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
+  })
   @JoinTable()
   user: User;
 }

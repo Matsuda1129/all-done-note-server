@@ -6,9 +6,7 @@ import { AuthGuard } from '../auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LikeDto, LikePostIdDto, LikeUserIdDto } from './likes.dto';
 
-@ApiBearerAuth('token')
 @UseGuards(AuthGuard)
-@ApiTags('like')
 @Controller('like')
 export class LikesController {
   constructor(private readonly likeService: LikesService, private jwtService: JwtService) {}

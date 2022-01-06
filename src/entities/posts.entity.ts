@@ -8,8 +8,8 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
-import { User } from '../../users/entities/users.entity';
-import { Like } from '../../likes/entities/likes.entity';
+import { User } from './users.entity';
+import { Like } from './likes.entity';
 
 @Entity('posts')
 export class PostEntity {
@@ -28,7 +28,11 @@ export class PostEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   readonly updatedAt?: Date;
 
-  @ManyToOne(() => User, (user) => user.posts)
+  @ManyToOne(() => User, (user) => user.posts, {
+    nullable: false,
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
+  })
   @JoinTable()
   user: User;
 
