@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Todo } from '../entities/todos.entity';
+import { Todo } from '../database/entities/todos.entity';
 import { TodosService } from './todos.service';
 import { TodosController } from './todos.controller';
 

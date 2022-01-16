@@ -6,19 +6,15 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   JoinTable,
+  BeforeInsert,
 } from 'typeorm';
 import { PostEntity } from './posts.entity';
 import { Like } from './likes.entity';
-import { Todo } from 'src/entities/todos.entity';
-import { SharedProp } from 'src/helpers/sharedProp.helpers';
+import * as bcrypt from 'bcryptjs';
+import { Todo } from './todos.entity';
 
 @Entity('users')
-export class User extends SharedProp {
-  // constructor(name: string, email: string, password: string) {
-  //   super();
-  //   (this.name = name), (this.email = email), (this.password = password);
-  // }
-
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -52,21 +48,28 @@ export class User extends SharedProp {
   @Column({ nullable: true })
   birthday: string;
 
-  // @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
-  // readonly createdAt?: Date;
+  @Column({ nullable: true })
+  age: number;
 
-  // @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
-  // readonly updatedAt?: Date;
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
+  readonly createdAt?: Date;
 
-  @OneToMany(() => PostEntity, (post) => post.user, { cascade: true })
-  @JoinTable()
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
+  readonly updatedAt?: Date;
+
+  @OneToMany(() => PostEntity, (post) => post.user)
   posts: PostEntity[];
 
-  @OneToMany(() => Like, (like) => like.user, { cascade: true })
-  @JoinTable()
+  @OneToMany(() => Like, (like) => like.user)
   likes: Like[];
 
-  @OneToMany(() => Todo, (todo) => todo.user, { cascade: true })
+  @OneToMany(() => Todo, (todo) => todo.user)
   @JoinTable()
   todos: Todo[];
+
+  @BeforeInsert()
+  async setPassword(password: string) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(password || this.password, salt);
+  }
 }

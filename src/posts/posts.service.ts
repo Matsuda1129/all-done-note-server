@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PostEntity } from '../entities/posts.entity';
+import { PostEntity } from '../database/entities/posts.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePostDto } from './posts.dto';
@@ -14,6 +14,18 @@ export class PostsService {
   async paginate(options: IPaginationOptions): Promise<Pagination<PostEntity>> {
     const queryBuilder = this.postRepository.createQueryBuilder('post');
     queryBuilder.orderBy('post.id', 'DESC').leftJoinAndSelect('post.user', 'user');
+    return paginate<PostEntity>(queryBuilder, options);
+  }
+
+  async paginateSearched(
+    options: IPaginationOptions,
+    searchWord: string,
+  ): Promise<Pagination<PostEntity>> {
+    const queryBuilder = this.postRepository.createQueryBuilder('post');
+    queryBuilder
+      .orderBy('post.id', 'DESC')
+      .leftJoinAndSelect('post.user', 'user')
+      .where('post.content like :ids', { ids: `%${searchWord}%`});
     return paginate<PostEntity>(queryBuilder, options);
   }
 

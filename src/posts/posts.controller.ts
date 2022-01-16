@@ -15,7 +15,7 @@ import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth.guard';
 import { CreatePostDto } from './posts.dto';
 import { Pagination } from 'nestjs-typeorm-paginate';
-import { PostEntity } from '../entities/posts.entity';
+import { PostEntity } from '../database/entities/posts.entity';
 @UseGuards(AuthGuard)
 @Controller('post')
 export class PostsController {
@@ -31,6 +31,24 @@ export class PostsController {
       page,
       limit,
     });
+  }
+
+  @Get(':searchWord/page')
+  async index2(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(50), ParseIntPipe) limit: number,
+    @Param('searchWord') searchWord: string,
+  ): Promise<Pagination<PostEntity>> {
+    limit = limit > 100 ? 100 : limit;
+    const result = this.postService.paginateSearched(
+      {
+        page,
+        limit,
+      },
+      searchWord,
+    );
+
+    return result;
   }
 
   @Get()

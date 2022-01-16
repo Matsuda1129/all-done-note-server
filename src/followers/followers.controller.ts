@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
 import { FollowersService } from './followers.service';
 import { FollowerCountDto, FollowerDto, FollowingCountDto } from './followers.dto';
+import { AuthGuard } from '../auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('follower')
 export class FollowersController {
   constructor(private readonly followerService: FollowersService) {}
@@ -9,6 +11,11 @@ export class FollowersController {
   @Get()
   async findAll() {
     return await this.followerService.findAll();
+  }
+
+  @Post('findOne')
+  async findOne(@Body() FollowerDto: FollowerDto) {
+    return await this.followerService.findOne(FollowerDto);
   }
 
   @Post()

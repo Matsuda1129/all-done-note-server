@@ -1,4 +1,4 @@
-import { User } from 'src/entities/users.entity';
+import { User } from './users.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -26,13 +26,13 @@ export class Todo {
   @Column({ type: 'varchar', length: 100 })
   listname: string;
 
-  @Column('boolean', { default: true })
+  @Column('boolean', { default: false })
   finished: boolean;
 
-  @Column('boolean', { default: true })
+  @Column('boolean', { default: false })
   lock: boolean;
 
-  @Column('boolean', { default: true })
+  @Column('boolean', { default: false })
   before_die: boolean;
 
   @Column()

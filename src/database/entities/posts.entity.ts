@@ -7,6 +7,7 @@ import {
   ManyToOne,
   JoinTable,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 import { User } from './users.entity';
 import { Like } from './likes.entity';
@@ -18,6 +19,9 @@ export class PostEntity {
 
   @Column({ type: 'varchar', length: 255 })
   content: string;
+
+  @Column()
+  userId: number;
 
   // @Column({ type: 'blob' })
   // picture: string;
@@ -33,13 +37,9 @@ export class PostEntity {
     onDelete: 'CASCADE',
     orphanedRowAction: 'delete',
   })
-  @JoinTable()
+  @JoinColumn({ name: 'userId' })
   user: User;
 
-  @Column()
-  userId: number;
-
   @OneToMany(() => Like, (like) => like.post)
-  @JoinTable()
   likes: Like[];
 }

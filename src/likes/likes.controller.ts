@@ -3,7 +3,6 @@ import { LikesService } from './likes.service';
 import { JwtService } from '@nestjs/jwt';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LikeDto, LikePostIdDto, LikeUserIdDto } from './likes.dto';
 
 @UseGuards(AuthGuard)

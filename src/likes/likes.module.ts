@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { LikesController } from './likes.controller';
 import { LikesService } from './likes.service';
-import { Like } from '../entities/likes.entity';
+import { Like } from '../database/entities/likes.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 

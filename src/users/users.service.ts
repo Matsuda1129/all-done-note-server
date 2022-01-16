@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { User } from '../entities/users.entity';
+import { User } from '../database/entities/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto, EditUserDto, EditUserPicture } from './users.dto';
+import { IPaginationOptions, Pagination, paginate } from 'nestjs-typeorm-paginate';
 @Injectable()
 export class UsersService {
   constructor(
@@ -34,7 +35,7 @@ export class UsersService {
     return await this.userRepository.save(editedUser);
   }
 
-  async updatePicture(id: number,dto: EditUserPicture) {
+  async updatePicture(id: number, dto: EditUserPicture) {
     const user = await this.userRepository.findOne(id);
     if (!user) throw new NotFoundException('User does not exist');
     const editedUser = Object.assign(user, dto);
@@ -51,5 +52,36 @@ export class UsersService {
 
   async findOne(data: any): Promise<User> {
     return this.userRepository.findOne(data);
+  }
+
+  async paginateSearched(
+    options: IPaginationOptions,
+    searchWord: string,
+    gender: string,
+    age: number,
+  ): Promise<Pagination<User>> {
+    let selectAge = [];
+    if (!age) {
+      for (let i = 0; selectAge.length < 150; i++) {
+        selectAge.push(i);
+      }
+    } else {
+      for (let i = age; selectAge.length < 10; i++) {
+        selectAge.push(i);
+      }
+    }
+
+    let selectGender = [];
+    if (gender === '') {
+      selectGender.push('man', 'woman', 'other');
+    } else {
+      selectGender.push(gender);
+    }
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+    queryBuilder
+      .where('user.name like :ids', { ids: `%${searchWord}%` })
+      .andWhere('user.gender IN (:...gender)', { gender: selectGender })
+      .andWhere('user.age IN (:...age)', { age: selectAge });
+    return paginate<User>(queryBuilder, options);
   }
 }

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Follower } from '../entities/followers.entity';
+import { Follower } from '../database/entities/followers.entity';
 import { FollowersService } from './followers.service';
 import { FollowersController } from './followers.controller';
 

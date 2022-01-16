@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class TodoDto {
   @IsNotEmpty()
@@ -43,5 +43,18 @@ export class TodoGenreDto {
 
   @IsNotEmpty()
   @IsString()
+  group: string;
+
+  @IsNotEmpty()
+  @IsString()
   genre: string;
+}
+export class TodoGroupDto {
+  @IsNotEmpty()
+  @IsNumber()
+  userId: number;
+
+  @IsNotEmpty()
+  @IsString()
+  group: string;
 }

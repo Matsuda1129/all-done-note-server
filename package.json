@@ -20,9 +20,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "deploy:dev": "nest build && serverless deploy",
-    "ts-node": "ts-node",
+    "ts-node": "ts-node  ./src/insert.ts",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
-  "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -34,7 +34,6 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.1.0",
     "@nestjs/typeorm": "^8.0.2",
-    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",

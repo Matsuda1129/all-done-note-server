@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Follower } from '../entities/followers.entity';
+import { Follower } from '../database/entities/followers.entity';
 import { FollowerCountDto, FollowerDto, FollowingCountDto } from './followers.dto';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class FollowersService {
   }
 
   async findOne(FollowerDto: FollowerDto) {
-    return this.followerRepository.findOne(FollowerDto);
+    return this.followerRepository.find(FollowerDto);
   }
 
   async createOne(FollowerDto: FollowerDto) {

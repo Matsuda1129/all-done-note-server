@@ -11,6 +11,9 @@ import {
   Req,
   UnauthorizedException,
   ValidationPipe,
+  DefaultValuePipe,
+  ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { EditUserDto, CreateUserDto, EditUserPicture } from './users.dto';
@@ -19,6 +22,8 @@ import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth.guard';
+import { Pagination } from 'nestjs-typeorm-paginate';
+import { User } from 'src/database/entities/users.entity';
 
 @Controller('user')
 export class UserController {
@@ -126,5 +131,27 @@ export class UserController {
     return {
       message: 'success',
     };
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('/page')
+  async index2(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(50), ParseIntPipe) limit: number,
+    @Body('searchWord') searchWord: string,
+    @Body('gender') gender: string,
+    @Body('age') age: number,
+  ): Promise<Pagination<User>> {
+    limit = limit > 100 ? 100 : limit;
+    const result = this.usersService.paginateSearched(
+      {
+        page,
+        limit,
+      },
+      searchWord,
+      gender,
+      age,
+    );
+    return result;
   }
 }

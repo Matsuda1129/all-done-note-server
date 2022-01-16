@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsString, IsBoolean, IsEnum, IsDateString } from 'class-validator';
-import { UserSex } from './users.enum';
+import { IsNotEmpty, IsString, IsBoolean, IsEnum, IsDateString, IsNumber } from 'class-validator';
 import { EnumToString } from 'src/helpers/enumToString';
+import { UserSex } from './users.enum';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -42,6 +42,9 @@ export class EditUserDto {
 
   @IsString()
   picture: string;
+
+  @IsNumber()
+  age: number;
 }
 
 export class EditUserPicture {

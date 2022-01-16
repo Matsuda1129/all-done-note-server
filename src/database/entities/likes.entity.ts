@@ -1,4 +1,4 @@
-import { PostEntity } from 'src/entities/posts.entity';
+import { PostEntity } from './posts.entity';
 import { User } from './users.entity';
 import {
   Entity,
@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinTable,
-  OneToMany,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity('likes')
@@ -28,8 +28,12 @@ export class Like {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   readonly updatedAt?: Date;
 
-  @ManyToOne(() => PostEntity, (post) => post.likes)
-  @JoinTable()
+  @ManyToOne(() => PostEntity, (post) => post.likes, {
+    nullable: false,
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
+  })
+  @JoinColumn({ name: 'postId' })
   post: PostEntity;
 
   @ManyToOne(() => User, (user) => user.likes, {
@@ -37,6 +41,6 @@ export class Like {
     onDelete: 'CASCADE',
     orphanedRowAction: 'delete',
   })
-  @JoinTable()
+  @JoinColumn({ name: 'userId' })
   user: User;
 }
