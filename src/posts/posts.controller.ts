@@ -51,6 +51,24 @@ export class PostsController {
     return result;
   }
 
+  @Post('searchId/page')
+  async paginateUserPosts(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(50), ParseIntPipe) limit: number,
+    @Body('searchId') searchId: number,
+  ): Promise<Pagination<PostEntity>> {
+    limit = limit > 100 ? 100 : limit;
+    const result = this.postService.paginateUserPosts(
+      {
+        page,
+        limit,
+      },
+      searchId,
+    );
+
+    return result;
+  }
+
   @Get()
   async findAll() {
     return await this.postService.findAll();

@@ -1,4 +1,4 @@
-import { define, factory } from 'typeorm-seeding';
+import { define } from 'typeorm-seeding';
 import { Todo } from '../entities/todos.entity';
 import Faker from 'faker';
 

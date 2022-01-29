@@ -143,14 +143,33 @@ export class UserController {
     @Body('age') age: number,
   ): Promise<Pagination<User>> {
     limit = limit > 100 ? 100 : limit;
+
+    let selectAge: any = [];
+    if (age === undefined) {
+      for (let i = 0; selectAge.length < 150; i++) {
+        selectAge.push(i);
+      }
+    } else {
+      for (let i = age; selectAge.length < 10; i++) {
+        selectAge.push(i);
+      }
+    }
+
+    let selectGender;
+    if (gender === undefined) {
+      selectGender = ['man', 'woman', 'other'];
+    } else {
+      selectGender = [gender];
+    }
+
     const result = this.usersService.paginateSearched(
       {
         page,
         limit,
       },
       searchWord,
-      gender,
-      age,
+      selectGender,
+      selectAge,
     );
     return result;
   }

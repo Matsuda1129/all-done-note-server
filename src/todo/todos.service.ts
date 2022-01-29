@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Todo } from '../database/entities/todos.entity';
-import { TodoDto, TodoGenreDto, TodoGroupDto } from './todos.dto';
+import { TodoDto, TodoGenreDto, TodoGroupDto, TodoGenreFinishDto } from './todos.dto';
 
 @Injectable()
 export class TodosService {
@@ -20,7 +20,13 @@ export class TodosService {
     const result = queryBuilder.where(TodoGenreDto).getMany();
 
     return result;
-    // return await this.todosRepository.find();
+  }
+
+  async findGenreFinish(TodoGenreFinishDto: TodoGenreFinishDto): Promise<Todo[]> {
+    const queryBuilder = this.todosRepository.createQueryBuilder('todo');
+    const result = queryBuilder.where(TodoGenreFinishDto).getMany();
+
+    return result;
   }
 
   async findGroup(TodoGroupDto: TodoGroupDto): Promise<Todo[]> {
@@ -28,7 +34,6 @@ export class TodosService {
     const result = queryBuilder.where(TodoGroupDto).getMany();
 
     return result;
-    // return await this.todosRepository.find();
   }
 
   async findOne(any: any) {

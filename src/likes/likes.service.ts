@@ -3,6 +3,7 @@ import { Like } from '../database/entities/likes.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LikeDto, LikePostIdDto, LikeUserIdDto } from './likes.dto';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class LikesService {
@@ -15,15 +16,18 @@ export class LikesService {
     return await this.likeRepository.find();
   }
 
-  async findAllUser(LikeUserIdDto: LikeUserIdDto): Promise<Like[]> {
+  async paginateSearched(
+    options: IPaginationOptions,
+    LikeUserIdDto: LikeUserIdDto,
+  ): Promise<Pagination<Like>> {
     const queryBuilder = this.likeRepository.createQueryBuilder('like');
     const result = queryBuilder
       .leftJoinAndSelect('like.post', 'post')
       .leftJoinAndSelect('post.user', 'user')
       .orderBy('post.createdAt', 'DESC')
-      .where(LikeUserIdDto)
-      .getMany();
-    return result;
+      .where(LikeUserIdDto);
+
+    return paginate<Like>(result, options);
   }
 
   async findOne(LikeDto: LikeDto): Promise<Like> {

@@ -57,26 +57,10 @@ export class UsersService {
   async paginateSearched(
     options: IPaginationOptions,
     searchWord: string,
-    gender: string,
-    age: number,
+    selectGender: string,
+    selectAge: number,
   ): Promise<Pagination<User>> {
-    let selectAge = [];
-    if (!age) {
-      for (let i = 0; selectAge.length < 150; i++) {
-        selectAge.push(i);
-      }
-    } else {
-      for (let i = age; selectAge.length < 10; i++) {
-        selectAge.push(i);
-      }
-    }
-
-    let selectGender = [];
-    if (gender === '') {
-      selectGender.push('man', 'woman', 'other');
-    } else {
-      selectGender.push(gender);
-    }
+    
     const queryBuilder = this.userRepository.createQueryBuilder('user');
     queryBuilder
       .where('user.name like :ids', { ids: `%${searchWord}%` })

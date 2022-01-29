@@ -49,6 +49,22 @@ export class TodoGenreDto {
   @IsString()
   genre: string;
 }
+export class TodoGenreFinishDto {
+  @IsNotEmpty()
+  @IsNumber()
+  userId: number;
+
+  @IsNotEmpty()
+  @IsString()
+  group: string;
+
+  @IsNotEmpty()
+  @IsString()
+  genre: string;
+
+  @IsBoolean()
+  finished: boolean;
+}
 export class TodoGroupDto {
   @IsNotEmpty()
   @IsNumber()

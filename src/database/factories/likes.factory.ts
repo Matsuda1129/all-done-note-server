@@ -1,8 +1,6 @@
 import { Like } from '../entities/likes.entity';
-import { define, factory } from 'typeorm-seeding';
+import { define } from 'typeorm-seeding';
 import Faker from 'faker';
-import { User } from '../entities/users.entity';
-import { PostEntity } from '../entities/posts.entity';
 
 define(Like, (faker: typeof Faker) => {
   const like = new Like();

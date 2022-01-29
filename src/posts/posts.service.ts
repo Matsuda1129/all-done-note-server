@@ -25,7 +25,19 @@ export class PostsService {
     queryBuilder
       .orderBy('post.id', 'DESC')
       .leftJoinAndSelect('post.user', 'user')
-      .where('post.content like :ids', { ids: `%${searchWord}%`});
+      .where('post.content like :ids', { ids: `%${searchWord}%` });
+    return paginate<PostEntity>(queryBuilder, options);
+  }
+
+  async paginateUserPosts(
+    options: IPaginationOptions,
+    searchId: number,
+  ): Promise<Pagination<PostEntity>> {
+    const queryBuilder = this.postRepository.createQueryBuilder('post');
+    queryBuilder
+      .orderBy('post.id', 'DESC')
+      .leftJoinAndSelect('post.user', 'user')
+      .where('post.userId = :ids', { ids: `${searchId}` });
     return paginate<PostEntity>(queryBuilder, options);
   }
 
