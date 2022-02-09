@@ -9,6 +9,7 @@ import { FollowersModule } from './followers/followers.module';
 import { TodosModule } from './todo/todos.module';
 import { InformationModule } from './information/information.module';
 import { CommentsModule } from './comments/comments.module';
+import { MailsModule } from './mails/mails.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,6 +27,7 @@ import { CommentsModule } from './comments/comments.module';
     TodosModule,
     InformationModule,
     CommentsModule,
+    MailsModule,
   ],
 })
 export class AppModule {}

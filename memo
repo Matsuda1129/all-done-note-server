@@ -1,5 +1,6 @@
-docker exec -it mysql_adns bash
-mysql -u root -p
+
+docker exec -it mysql_adns mysql -u root -p
+
 qloOMUPsXbtPL6Pm
 {
     "type": "mysql",
@@ -13,3 +14,12 @@ qloOMUPsXbtPL6Pm
     "autoLoadEntities": true,
     "synchronize": true
 }
+
+CREATE TEMPORARY TABLE comment_tmp AS SELECT MIN(userId), postId FROM comment GROUP BY postId;
+DELETE FROM comment;
+INSERT INTO comment SELECT * FROM comment_tmp;
+DROP TEMPORARY TABLE comment_tmp;
+
+SELECT DISTINCT userId, postId FROM comments;
+
+SELECT ALL col_name1 [, col_name2 ...] FROM table_name

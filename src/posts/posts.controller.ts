@@ -8,12 +8,13 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   Query,
+  Put,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { JwtService } from '@nestjs/jwt';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth.guard';
-import { CreatePostDto } from './posts.dto';
+import { CreatePostDto, EditPostDto } from './posts.dto';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { PostEntity } from '../database/entities/posts.entity';
 @UseGuards(AuthGuard)
@@ -75,7 +76,7 @@ export class PostsController {
   }
 
   @Get(':id')
-  async getPost(@Param('id') id: string) {
+  async getPost(@Param('id') id: number) {
     return await this.postService.findOneId(Number(id));
   }
 
@@ -91,5 +92,10 @@ export class PostsController {
       message: 'success deleted',
       result,
     };
+  }
+
+  @Put('update/:id')
+  async editPost(@Param('id') id: number, @Body() dto: EditPostDto) {
+    return await this.postService.editOne(id, dto);
   }
 }

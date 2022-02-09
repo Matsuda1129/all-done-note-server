@@ -6,6 +6,8 @@ import { Like } from '../entities/likes.entity';
 import { Follower } from '../entities/followers.entity';
 import { Todo } from '../entities/todos.entity';
 import { Information } from '../entities/information.entity';
+import { Comment } from '../entities/comments.entity';
+import { Mail } from '../entities/mails.entity';
 
 export default class CreateDate implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
@@ -15,5 +17,7 @@ export default class CreateDate implements Seeder {
     await factory(Follower)().createMany(1000);
     await factory(Todo)().createMany(1000);
     await factory(Information)().createMany(100);
+    await factory(Comment)().createMany(1000);
+    await factory(Mail)().createMany(3000);
   }
 }

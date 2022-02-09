@@ -8,6 +8,7 @@ define(Todo, (faker: typeof Faker) => {
   const moneyArry = ['収入'];
   const todoArry = ['旅行', '趣味', 'やりたいこと'];
   const preparationArry = ['葬儀', '学費', '保険'];
+  const finished = [true, false];
   let genreOne;
   if (groupOne === 'お金') {
     genreOne = moneyArry[Math.floor(Math.random() * moneyArry.length)];
@@ -21,6 +22,7 @@ define(Todo, (faker: typeof Faker) => {
   todos.userId = faker.random.number({ min: 1, max: 100 });
   todos.group = groupOne;
   todos.genre = genreOne;
+  todos.finished = finished[Math.floor(Math.random() * finished.length)];
   todos.listname = faker.lorem.words();
   todos.money = faker.random.number({ min: 1000, max: 100000 });
   return todos;

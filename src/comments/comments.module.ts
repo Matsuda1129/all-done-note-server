@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Comments } from 'src/database/entities/comment.entity';
+import { Comment } from 'src/database/entities/comments.entity';
 import { CommentsService } from './comments.service';
 import { CommentsController } from './comments.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Comments]),
+    TypeOrmModule.forFeature([Comment]),
     JwtModule.register({
       secret: 'secret',
       signOptions: { expiresIn: '1d' },

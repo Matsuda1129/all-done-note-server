@@ -59,13 +59,14 @@ export class UsersService {
     searchWord: string,
     selectGender: string,
     selectAge: number,
+    selectJob: string,
   ): Promise<Pagination<User>> {
-    
     const queryBuilder = this.userRepository.createQueryBuilder('user');
     queryBuilder
       .where('user.name like :ids', { ids: `%${searchWord}%` })
       .andWhere('user.gender IN (:...gender)', { gender: selectGender })
-      .andWhere('user.age IN (:...age)', { age: selectAge });
+      .andWhere('user.age IN (:...age)', { age: selectAge })
+      .andWhere('user.job IN (:...job)', { job: selectJob });
     return paginate<User>(queryBuilder, options);
   }
 }

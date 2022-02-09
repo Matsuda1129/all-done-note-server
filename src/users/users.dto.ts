@@ -1,4 +1,12 @@
-import { IsNotEmpty, IsString, IsBoolean, IsEnum, IsDateString, IsNumber } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsBoolean,
+  IsEnum,
+  IsDateString,
+  IsNumber,
+  IsArray,
+} from 'class-validator';
 import { EnumToString } from 'src/helpers/enumToString';
 import { UserSex } from './users.enum';
 
@@ -44,7 +52,13 @@ export class EditUserDto {
   picture: string;
 
   @IsNumber()
-  age: number;
+  savings: number;
+
+  @IsString()
+  job: number;
+
+  // @IsArray()
+  // family: string;
 }
 
 export class EditUserPicture {

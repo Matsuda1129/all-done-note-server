@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PostEntity } from '../database/entities/posts.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreatePostDto } from './posts.dto';
+import { CreatePostDto, EditPostDto } from './posts.dto';
 import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
 @Injectable()
 export class PostsService {
@@ -56,5 +56,9 @@ export class PostsService {
 
   async findOneId(id: number): Promise<PostEntity> {
     return this.postRepository.findOne(id, { relations: ['user'] });
+  }
+
+  async editOne(id: number, dto: EditPostDto) {
+    return this.postRepository.update(id, dto);
   }
 }

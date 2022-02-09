@@ -12,3 +12,12 @@ export class CreatePostDto {
   // @IsString()
   // picture: string;
 }
+
+export class EditPostDto {
+  @IsNotEmpty()
+  @IsString()
+  content: string;
+
+  // @IsString()
+  // picture: string;
+}

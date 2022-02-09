@@ -45,9 +45,7 @@ export class TodosService {
   }
 
   async update(id: number, TodoDto: TodoDto) {
-    const todo = await this.todosRepository.findOne(id);
-    const editedTodo = Object.assign(todo, TodoDto);
-    return await this.todosRepository.save(editedTodo);
+    return await this.todosRepository.update(id, TodoDto);
   }
 
   async deleteOne(any: any) {

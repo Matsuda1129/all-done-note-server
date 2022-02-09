@@ -9,9 +9,11 @@ import {
   BeforeInsert,
 } from 'typeorm';
 import { PostEntity } from './posts.entity';
+import { Comment } from './comments.entity';
 import { Like } from './likes.entity';
 import * as bcrypt from 'bcryptjs';
 import { Todo } from './todos.entity';
+import { Mail } from './mails.entity';
 
 @Entity('users')
 export class User {
@@ -51,6 +53,15 @@ export class User {
   @Column({ nullable: true })
   age: number;
 
+  @Column({ nullable: true })
+  savings: number;
+
+  @Column({ nullable: true, type: 'simple-array' })
+  family: string[];
+
+  @Column({ nullable: true })
+  job: string;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   readonly createdAt?: Date;
 
@@ -62,6 +73,15 @@ export class User {
 
   @OneToMany(() => Like, (like) => like.user)
   likes: Like[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comment: Comment[];
+
+  @OneToMany(() => Mail, (mail) => mail.user)
+  mails: Mail[];
+
+  @OneToMany(() => Mail, (mail) => mail.recipient)
+  mails2: Mail[];
 
   @OneToMany(() => Todo, (todo) => todo.user)
   @JoinTable()

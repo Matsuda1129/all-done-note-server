@@ -2,12 +2,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from './users.entity';
 
 @Entity('comments')
-export class Comments {
+export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,4 +28,12 @@ export class Comments {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   readonly updatedAt?: Date;
+
+  @ManyToOne(() => User, (user) => user.comment, {
+    nullable: false,
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
+  })
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }
