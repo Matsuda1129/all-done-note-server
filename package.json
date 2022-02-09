@@ -22,6 +22,7 @@
     "deploy:dev": "nest build && serverless deploy"
   },
   "dependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.5",
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/mapped-types": "^1.0.0",

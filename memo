@@ -1,2 +1,31 @@
 docker exec -it mysql_adns bash
+<<<<<<< Updated upstream
 mysql -u root -p
+=======
+mysql -u root -p
+
+docker exec -it mysql_adns mysql -u root -p
+
+qloOMUPsXbtPL6Pm
+{
+    "type": "mysql",
+    "host": "mysql",
+    "port": 3306,
+    "username": "takuya",
+    "password": "secret",
+    "database": "all_done_note",
+    "entities": ["dist/entities/**/*.entity.js"],
+    "migrations": ["dist/migrations/**/*.js"],
+    "autoLoadEntities": true,
+    "synchronize": true
+}
+
+CREATE TEMPORARY TABLE comment_tmp AS SELECT MIN(userId), postId FROM comment GROUP BY postId;
+DELETE FROM comment;
+INSERT INTO comment SELECT * FROM comment_tmp;
+DROP TEMPORARY TABLE comment_tmp;
+
+SELECT DISTINCT userId, postId FROM comments;
+
+SELECT ALL col_name1 [, col_name2 ...] FROM table_name
+>>>>>>> Stashed changes

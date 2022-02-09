@@ -2,8 +2,21 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+<<<<<<< Updated upstream
 import { UserModule } from './user/user.module';
 
+=======
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmConfigService } from './config/typeorm-config.service';
+import { UsersModule } from './users/users.module';
+import { PostsModule } from './posts/posts.module';
+import { LikesModule } from './likes/likes.module';
+import { FollowersModule } from './followers/followers.module';
+import { TodosModule } from './todo/todos.module';
+import { InformationModule } from './information/information.module';
+import { CommentsModule } from './comments/comments.module';
+import { MailsModule } from './mails/mails.module';
+>>>>>>> Stashed changes
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -17,7 +30,22 @@ import { UserModule } from './user/user.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+<<<<<<< Updated upstream
     UserModule,
+=======
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: TypeOrmConfigService,
+    }),
+    UsersModule,
+    PostsModule,
+    LikesModule,
+    FollowersModule,
+    TodosModule,
+    InformationModule,
+    CommentsModule,
+    MailsModule,
+>>>>>>> Stashed changes
   ],
   controllers: [AppController],
   providers: [AppService],
