@@ -59,9 +59,8 @@ export class UsersService {
     searchWord: string,
     selectGender: string,
     selectAge: number,
-    selectJob:string
+    selectJob: string,
   ): Promise<Pagination<User>> {
-
     const queryBuilder = this.userRepository.createQueryBuilder('user');
     queryBuilder
       .where('user.name like :ids', { ids: `%${searchWord}%` })

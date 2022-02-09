@@ -8,7 +8,7 @@ define(Todo, (faker: typeof Faker) => {
   const moneyArry = ['収入'];
   const todoArry = ['旅行', '趣味', 'やりたいこと'];
   const preparationArry = ['葬儀', '学費', '保険'];
-  const finished = [true,false]
+  const finished = [true, false];
   let genreOne;
   if (groupOne === 'お金') {
     genreOne = moneyArry[Math.floor(Math.random() * moneyArry.length)];
