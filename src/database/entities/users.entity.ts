@@ -56,11 +56,56 @@ export class User {
   @Column({ nullable: true })
   savings: number;
 
-  @Column({ nullable: true, type: 'simple-array' })
-  family: string[];
+  @Column('boolean', { default: false })
+  alone: boolean;
+
+  @Column('boolean', { default: false })
+  isMarried: boolean;
+
+  @Column('boolean', { default: false })
+  isParents: boolean;
+
+  @Column('boolean', { default: false })
+  isSpouseParents: boolean;
+
+  @Column('boolean', { default: false })
+  isChild: boolean;
+
+  @Column('boolean', { default: false })
+  isChildren2: boolean;
+
+  @Column('boolean', { default: false })
+  isChildren3: boolean;
+
+  @Column('boolean', { default: false })
+  isOthers: boolean;
+
+  @Column('boolean', { default: false })
+  openData: boolean;
+
+  @Column('boolean', { default: false })
+  openDataAfterDie: boolean;
 
   @Column({ nullable: true })
   job: string;
+
+  @Column({ nullable: true })
+  goalMoney1: number;
+
+  @Column({ nullable: true })
+  goalMoney2: number;
+
+  @Column({ nullable: true })
+  allPercent: number;
+
+  @Column({ nullable: true })
+  preparationPercent: number;
+
+  @Column({ nullable: true })
+  moneyPercent: number;
+
+  @Column({ nullable: true })
+  todoPercent: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   readonly createdAt?: Date;

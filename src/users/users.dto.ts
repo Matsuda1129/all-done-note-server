@@ -57,11 +57,57 @@ export class EditUserDto {
   @IsString()
   job: number;
 
-  // @IsArray()
-  // family: string;
+  @IsBoolean()
+  alone: boolean;
+
+  @IsBoolean()
+  isMarried: boolean;
+
+  @IsBoolean()
+  isChild: boolean;
+
+  @IsBoolean()
+  isChildren2: boolean;
+
+  @IsBoolean()
+  isChildren3: boolean;
+
+  @IsBoolean()
+  isParents: boolean;
+
+  @IsBoolean()
+  isSpouseParents: boolean;
+
+  @IsBoolean()
+  isOthers: boolean;
+
+  @IsBoolean()
+  openData: boolean;
+
+  @IsBoolean()
+  openDataAfterDie: boolean;
 }
 
 export class EditUserPicture {
   @IsString()
   picture: string;
+}
+export class EditUserTodo {
+  @IsNumber()
+  goalMoney1: number;
+
+  @IsNumber()
+  goalMoney2: number;
+
+  @IsNumber()
+  allPercent: number;
+
+  @IsNumber()
+  moneyPercent: number;
+
+  @IsNumber()
+  preparationPercent: number;
+
+  @IsNumber()
+  todoPercent: number;
 }

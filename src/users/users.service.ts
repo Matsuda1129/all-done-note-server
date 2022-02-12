@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { User } from '../database/entities/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto, EditUserDto, EditUserPicture } from './users.dto';
+import { CreateUserDto, EditUserDto, EditUserPicture, EditUserTodo } from './users.dto';
 import { IPaginationOptions, Pagination, paginate } from 'nestjs-typeorm-paginate';
 @Injectable()
 export class UsersService {
@@ -33,6 +33,10 @@ export class UsersService {
     if (!user) throw new NotFoundException('User does not exist');
     const editedUser = Object.assign(user, dto);
     return await this.userRepository.save(editedUser);
+  }
+
+  async updateTodo(id: number, dto: EditUserTodo) {
+    return await this.userRepository.update(id, dto);
   }
 
   async updatePicture(id: number, dto: EditUserPicture) {

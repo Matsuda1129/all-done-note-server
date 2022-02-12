@@ -40,6 +40,8 @@ define(User, (faker: typeof Faker) => {
     'その他サービス業',
   ];
 
+  const finished = [true, false, false];
+
   const user = new User();
   user.name = `${firstName}`;
   user.password = 'aaaaaaa';
@@ -50,5 +52,20 @@ define(User, (faker: typeof Faker) => {
   user.age = faker.random.number({ min: 1, max: 100 });
   user.job = jobs[Math.floor(Math.random() * jobs.length)];
   user.savings = faker.random.number({ min: 100000, max: 300000 });
+  user.alone = finished[Math.floor(Math.random() * finished.length)];
+  user.isMarried = finished[Math.floor(Math.random() * finished.length)];
+  user.isParents = finished[Math.floor(Math.random() * finished.length)];
+  user.isSpouseParents = finished[Math.floor(Math.random() * finished.length)];
+  user.isChild = finished[Math.floor(Math.random() * finished.length)];
+  user.isChildren2 = finished[Math.floor(Math.random() * finished.length)];
+  user.isChildren3 = finished[Math.floor(Math.random() * finished.length)];
+  user.isOthers = finished[Math.floor(Math.random() * finished.length)];
+  user.goalMoney1 = faker.random.number({ min: 30, max: 100 });
+  user.goalMoney2 = faker.random.number({ min: 1, max: 30 });
+  user.allPercent = faker.random.number({ min: 1, max: 50 });
+  user.moneyPercent = faker.random.number({ min: 1, max: 100 });
+  user.preparationPercent = faker.random.number({ min: 1, max: 100 });
+  user.todoPercent = faker.random.number({ min: 1, max: 100 });
+
   return user;
 });

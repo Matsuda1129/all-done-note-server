@@ -6,11 +6,7 @@ import { Like } from '../entities/likes.entity';
 import { Follower } from '../entities/followers.entity';
 import { Todo } from '../entities/todos.entity';
 import { Information } from '../entities/information.entity';
-<<<<<<< Updated upstream
 import { Comment } from '../entities/comments.entity';
-=======
-import { Comment } from '../entities/comment.entity';
->>>>>>> Stashed changes
 import { Mail } from '../entities/mails.entity';
 
 export default class CreateDate implements Seeder {

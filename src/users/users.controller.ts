@@ -16,7 +16,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { EditUserDto, CreateUserDto, EditUserPicture } from './users.dto';
+import { EditUserDto, CreateUserDto, EditUserPicture, EditUserTodo } from './users.dto';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
@@ -104,6 +104,12 @@ export class UserController {
   @Put(':id')
   async update(@Param('id') id: number, @Body(ValidationPipe) dto: EditUserDto) {
     return this.usersService.update(id, dto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('/:id/todo')
+  async updateTodo(@Param('id') id: number, @Body() dto: EditUserTodo) {
+    return this.usersService.updateTodo(id, dto);
   }
 
   @UseGuards(AuthGuard)
