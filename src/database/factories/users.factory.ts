@@ -41,6 +41,7 @@ define(User, (faker: typeof Faker) => {
   ];
 
   const finished = [true, false, false];
+  const finished2 = [true, true, false];
 
   const user = new User();
   user.name = `${firstName}`;
@@ -66,6 +67,8 @@ define(User, (faker: typeof Faker) => {
   user.moneyPercent = faker.random.number({ min: 1, max: 100 });
   user.preparationPercent = faker.random.number({ min: 1, max: 100 });
   user.todoPercent = faker.random.number({ min: 1, max: 100 });
+  user.openData = finished2[Math.floor(Math.random() * finished.length)];
+  user.openDataAfterDie = finished2[Math.floor(Math.random() * finished.length)];
 
   return user;
 });
