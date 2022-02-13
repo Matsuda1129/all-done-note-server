@@ -41,12 +41,14 @@ define(User, (faker: typeof Faker) => {
   ];
 
   const finished = [true, false, false];
-  const finished2 = [true, true, false];
+  const openData = [true, true, false];
+  const alive = [true, true, true, true, false];
 
   const user = new User();
   user.name = `${firstName}`;
   user.password = 'aaaaaaa';
   user.gender = sex[Math.floor(Math.random() * sex.length)];
+  user.alive = alive[Math.floor(Math.random() * alive.length)];
   user.picture = picture[Math.floor(Math.random() * picture.length)];
   user.introduction = faker.lorem.paragraph();
   user.email = `${firstName}@gmail.com`;
@@ -61,14 +63,16 @@ define(User, (faker: typeof Faker) => {
   user.isChildren2 = finished[Math.floor(Math.random() * finished.length)];
   user.isChildren3 = finished[Math.floor(Math.random() * finished.length)];
   user.isOthers = finished[Math.floor(Math.random() * finished.length)];
-  user.goalMoney1 = faker.random.number({ min: 30, max: 100 });
-  user.goalMoney2 = faker.random.number({ min: 1, max: 30 });
+  user.goalMoney1 = faker.random.number({ min: 5000000, max: 70000000 });
+  user.goalMoney2 = faker.random.number({ min: 7000000, max: 110000000 });
+  user.goalMoney1Percent = faker.random.number({ min: 30, max: 100 });
+  user.goalMoney2Percent = faker.random.number({ min: 1, max: 30 });
   user.allPercent = faker.random.number({ min: 1, max: 50 });
   user.moneyPercent = faker.random.number({ min: 1, max: 100 });
   user.preparationPercent = faker.random.number({ min: 1, max: 100 });
   user.todoPercent = faker.random.number({ min: 1, max: 100 });
-  user.openData = finished2[Math.floor(Math.random() * finished.length)];
-  user.openDataAfterDie = finished2[Math.floor(Math.random() * finished.length)];
+  user.openData = openData[Math.floor(Math.random() * openData.length)];
+  user.openDataAfterDie = openData[Math.floor(Math.random() * openData.length)];
 
   return user;
 });

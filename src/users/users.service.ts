@@ -95,7 +95,6 @@ export class UsersService {
   }
 
   async userDataAnalize(
-    searchWord,
     gender,
     alive,
     selectAge,
@@ -111,8 +110,7 @@ export class UsersService {
   ) {
     const queryBuilder = await this.userRepository
       .createQueryBuilder('user')
-      .where('user.name like :ids', { ids: `%${searchWord}%` })
-      .andWhere('user.gender IN (:...gender)', { gender: [gender] })
+      .where('user.gender IN (:...gender)', { gender: [gender] })
       .andWhere('user.alive IN (:...alive)', { alive: [alive] })
       .andWhere('user.age IN (:...age)', { age: selectAge })
       .andWhere('user.job IN (:...job)', { job: [job] })

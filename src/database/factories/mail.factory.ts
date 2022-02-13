@@ -8,8 +8,8 @@ const recipientIdArray = [];
 const titleArray = [];
 const messageArray = [];
 define(Mail, (faker: typeof Faker) => {
-  const userIdNumber = faker.random.number({ min: 1, max: 100 });
-  const recipientIdNumber = faker.random.number({ min: 1, max: 100 });
+  const userIdNumber = faker.random.number({ min: 1, max: 500 });
+  const recipientIdNumber = faker.random.number({ min: 1, max: 500 });
   const title = faker.lorem.sentence(1);
   const message = faker.lorem.paragraph();
 

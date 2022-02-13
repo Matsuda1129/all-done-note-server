@@ -96,6 +96,12 @@ export class User {
   goalMoney2: number;
 
   @Column({ nullable: true })
+  goalMoney1Percent: number;
+
+  @Column({ nullable: true })
+  goalMoney2Percent: number;
+
+  @Column({ nullable: true })
   allPercent: number;
 
   @Column({ nullable: true })

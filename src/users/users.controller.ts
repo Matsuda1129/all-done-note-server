@@ -248,7 +248,6 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Post('/dataAnalize')
   async userDataAnalize(
-    @Body('searchWord') searchWord: string,
     @Body('gender') gender,
     @Body('alive') alive,
     @Body('age') age,
@@ -324,9 +323,7 @@ export class UserController {
       isChildren3 = [true, false];
       isOthers = [true, false];
     }
-
     const result = this.usersService.userDataAnalize(
-      searchWord,
       gender,
       alive,
       selectAge,

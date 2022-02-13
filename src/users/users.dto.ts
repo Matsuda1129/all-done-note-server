@@ -100,6 +100,12 @@ export class EditUserTodo {
   goalMoney2: number;
 
   @IsNumber()
+  goalMoney1Percent: number;
+
+  @IsNumber()
+  goalMoney2Percent: number;
+
+  @IsNumber()
   allPercent: number;
 
   @IsNumber()

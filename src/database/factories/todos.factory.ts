@@ -19,7 +19,7 @@ define(Todo, (faker: typeof Faker) => {
   }
 
   const todos = new Todo();
-  todos.userId = faker.random.number({ min: 1, max: 100 });
+  todos.userId = faker.random.number({ min: 1, max: 500 });
   todos.group = groupOne;
   todos.genre = genreOne;
   todos.finished = finished[Math.floor(Math.random() * finished.length)];
