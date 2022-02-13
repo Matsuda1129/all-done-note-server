@@ -60,17 +60,74 @@ export class UsersService {
 
   async paginateSearched(
     options: IPaginationOptions,
-    searchWord: string,
-    selectGender: string,
-    selectAge: number,
-    selectJob: string,
+    searchWord,
+    gender,
+    alive,
+    selectAge,
+    job,
+    alone,
+    isMarried,
+    isParents,
+    isSpouseParents,
+    isChild,
+    isChildren2,
+    isChildren3,
+    isOthers,
   ): Promise<Pagination<User>> {
     const queryBuilder = this.userRepository.createQueryBuilder('user');
     queryBuilder
       .where('user.name like :ids', { ids: `%${searchWord}%` })
-      .andWhere('user.gender IN (:...gender)', { gender: selectGender })
+      .andWhere('user.gender IN (:...gender)', { gender: [gender] })
+      .andWhere('user.alive IN (:...alive)', { alive: [alive] })
       .andWhere('user.age IN (:...age)', { age: selectAge })
-      .andWhere('user.job IN (:...job)', { job: selectJob });
+      .andWhere('user.job IN (:...job)', { job: [job] })
+      .andWhere('user.alone IN (:...alone)', { alone: [alone] })
+      .andWhere('user.isMarried IN (:...isMarried)', { isMarried: [isMarried] })
+      .andWhere('user.isParents IN (:...isParents)', { isParents: [isParents] })
+      .andWhere('user.isSpouseParents IN (:...isSpouseParents)', {
+        isSpouseParents: [isSpouseParents],
+      })
+      .andWhere('user.isChild IN (:...isChild)', { isChild: [isChild] })
+      .andWhere('user.isChildren2 IN (:...isChildren2)', { isChildren2: [isChildren2] })
+      .andWhere('user.isChildren3 IN (:...isChildren3)', { isChildren3: [isChildren3] })
+      .andWhere('user.isOthers IN (:...isOthers)', { isOthers: [isOthers] });
     return paginate<User>(queryBuilder, options);
   }
+
+  async userDataAnalize(
+    searchWord,
+    gender,
+    alive,
+    selectAge,
+    job,
+    alone,
+    isMarried,
+    isParents,
+    isSpouseParents,
+    isChild,
+    isChildren2,
+    isChildren3,
+    isOthers,
+  ) {
+    const queryBuilder = await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.name like :ids', { ids: `%${searchWord}%` })
+      .andWhere('user.gender IN (:...gender)', { gender: [gender] })
+      .andWhere('user.alive IN (:...alive)', { alive: [alive] })
+      .andWhere('user.age IN (:...age)', { age: selectAge })
+      .andWhere('user.job IN (:...job)', { job: [job] })
+      .andWhere('user.alone IN (:...alone)', { alone: [alone] })
+      .andWhere('user.isMarried IN (:...isMarried)', { isMarried: [isMarried] })
+      .andWhere('user.isParents IN (:...isParents)', { isParents: [isParents] })
+      .andWhere('user.isSpouseParents IN (:...isSpouseParents)', {
+        isSpouseParents: [isSpouseParents],
+      })
+      .andWhere('user.isChild IN (:...isChild)', { isChild: [isChild] })
+      .andWhere('user.isChildren2 IN (:...isChildren2)', { isChildren2: [isChildren2] })
+      .andWhere('user.isChildren3 IN (:...isChildren3)', { isChildren3: [isChildren3] })
+      .andWhere('user.isOthers IN (:...isOthers)', { isOthers: [isOthers] })
+      .getMany();
+    return queryBuilder;
+  }
+
 }
