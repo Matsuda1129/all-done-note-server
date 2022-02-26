@@ -21,27 +21,35 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "deploy:dev": "nest build && serverless deploy",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
-  "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "dependencies": {
-    "@faker-js/faker": "^6.0.0-alpha.5",
+    "@faker-js/faker": "^6.0.0-alpha.7",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.2.0",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/jwt": "^8.0.0",
     "@nestjs/mapped-types": "^1.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.2",
+    "@types/bcryptjs": "^2.4.2",
     "aws-lambda": "^1.0.6",
     "aws-sdk": "^2.1000.0",
     "aws-serverless-express": "^3.4.0",
+    "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "cookie-parser": "^1.4.6",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
+    "nestjs-typeorm-paginate": "^3.1.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.1.6",
-    "typeorm": "^0.2.37"
+    "typeorm": "^0.2.37",
+    "typeorm-pagination": "^2.0.3",
+    "typeorm-seeding": "^1.6.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
