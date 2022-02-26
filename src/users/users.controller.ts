@@ -16,10 +16,17 @@ import {
   Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { EditUserDto, CreateUserDto, EditUserPicture, EditUserTodo } from './users.dto';
+import {
+  EditUserDto,
+  CreateUserDto,
+  EditUserPicture,
+  EditUserTodo,
+  EditUserWill,
+  EditUserAlive,
+} from './users.dto';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { Response, Request } from 'express';
+import e, { Response, Request } from 'express';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth.guard';
 import { Pagination } from 'nestjs-typeorm-paginate';
@@ -72,6 +79,21 @@ export class UserController {
     }
   }
 
+  @Post('checkPassword')
+  async checkPassword(@Body('id') id: number, @Body('password') password: string) {
+    try {
+      const user = await this.usersService.findOne({ id });
+      const compared = await bcrypt.compareSync(password, user.password);
+      if (!compared) {
+        throw new BadRequestException('invalid credentials');
+      }
+
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   @Get('cookie')
   async cookie(@Req() req: Request) {
     try {
@@ -116,6 +138,18 @@ export class UserController {
   @Put('/:id/picture')
   async updatePicture(@Param('id') id: number, @Body() dto: EditUserPicture) {
     return this.usersService.updatePicture(id, dto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('/:id/will')
+  async updateWill(@Param('id') id: number, @Body() dto: EditUserWill) {
+    return this.usersService.updateWill(id, dto);
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('/:id/alive')
+  async updateAlive(@Param('id') id: number, @Body() dto: EditUserAlive) {
+    return this.usersService.updateAlive(id, dto);
   }
 
   @UseGuards(AuthGuard)

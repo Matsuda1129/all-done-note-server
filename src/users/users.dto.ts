@@ -28,13 +28,6 @@ export class CreateUserDto {
 }
 
 export class EditUserDto {
-  @IsNotEmpty()
-  @IsString()
-  name: string;
-
-  @IsBoolean()
-  alive: boolean;
-
   @IsString()
   @IsEnum(UserSex, {
     message: `Plesase select from ${EnumToString(UserSex)}`,
@@ -49,7 +42,7 @@ export class EditUserDto {
   birthday: string;
 
   @IsString()
-  picture: string;
+  icon: string;
 
   @IsNumber()
   savings: number;
@@ -89,8 +82,16 @@ export class EditUserDto {
 }
 
 export class EditUserPicture {
-  @IsString()
-  picture: string;
+  @IsArray()
+  picture: string[];
+}
+export class EditUserWill {
+  @IsBoolean()
+  will: boolean;
+}
+export class EditUserAlive {
+  @IsBoolean()
+  alive: boolean;
 }
 export class EditUserTodo {
   @IsNumber()

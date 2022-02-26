@@ -6,7 +6,7 @@ define(User, (faker: typeof Faker) => {
   const gender = faker.random.number(1);
   const firstName = faker.name.firstName(gender);
   const sex = ['man', 'woman', 'other'];
-  const picture = [
+  const icon = [
     'banana.jpeg',
     'book.png',
     'cathle.jpeg',
@@ -49,7 +49,7 @@ define(User, (faker: typeof Faker) => {
   user.password = 'aaaaaaa';
   user.gender = sex[Math.floor(Math.random() * sex.length)];
   user.alive = alive[Math.floor(Math.random() * alive.length)];
-  user.picture = picture[Math.floor(Math.random() * picture.length)];
+  user.icon = icon[Math.floor(Math.random() * icon.length)];
   user.introduction = faker.lorem.paragraph();
   user.email = `${firstName}@gmail.com`;
   user.age = faker.random.number({ min: 1, max: 100 });

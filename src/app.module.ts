@@ -10,6 +10,7 @@ import { TodosModule } from './todo/todos.module';
 import { InformationModule } from './information/information.module';
 import { CommentsModule } from './comments/comments.module';
 import { MailsModule } from './mails/mails.module';
+import { FlashesModule } from './flashes/flashes.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,6 +29,7 @@ import { MailsModule } from './mails/mails.module';
     InformationModule,
     CommentsModule,
     MailsModule,
+    FlashesModule,
   ],
 })
 export class AppModule {}

@@ -2,7 +2,14 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { User } from '../database/entities/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto, EditUserDto, EditUserPicture, EditUserTodo } from './users.dto';
+import {
+  CreateUserDto,
+  EditUserAlive,
+  EditUserDto,
+  EditUserPicture,
+  EditUserTodo,
+  EditUserWill,
+} from './users.dto';
 import { IPaginationOptions, Pagination, paginate } from 'nestjs-typeorm-paginate';
 @Injectable()
 export class UsersService {
@@ -38,12 +45,16 @@ export class UsersService {
   async updateTodo(id: number, dto: EditUserTodo) {
     return await this.userRepository.update(id, dto);
   }
+  async updateWill(id: number, dto: EditUserWill) {
+    return await this.userRepository.update(id, dto);
+  }
+
+  async updateAlive(id: number, dto: EditUserAlive) {
+    return await this.userRepository.update(id, dto);
+  }
 
   async updatePicture(id: number, dto: EditUserPicture) {
-    const user = await this.userRepository.findOne(id);
-    if (!user) throw new NotFoundException('User does not exist');
-    const editedUser = Object.assign(user, dto);
-    return await this.userRepository.save(editedUser);
+    return await this.userRepository.update(id, dto);
   }
 
   async deleteOne(id: number) {
@@ -127,5 +138,4 @@ export class UsersService {
       .getMany();
     return queryBuilder;
   }
-
 }

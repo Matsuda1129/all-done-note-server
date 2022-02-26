@@ -1,29 +1,24 @@
 import {
-  Entity,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
+  Entity,
   JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from './users.entity';
-import { Like } from './likes.entity';
 
-@Entity('posts')
-export class PostEntity {
+@Entity('flashes')
+export class Flash {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({ type: 'varchar', length: 255 })
-  content: string;
 
   @Column()
   userId: number;
 
-  @Column({ type: 'simple-array' })
-  picture: string[];
+  @Column()
+  message: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   readonly createdAt?: Date;
@@ -31,14 +26,11 @@ export class PostEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   readonly updatedAt?: Date;
 
-  @ManyToOne(() => User, (user) => user.posts, {
+  @ManyToOne(() => User, (user) => user.flash, {
     nullable: false,
     onDelete: 'CASCADE',
     orphanedRowAction: 'delete',
   })
   @JoinColumn({ name: 'userId' })
   user: User;
-
-  @OneToMany(() => Like, (like) => like.post)
-  likes: Like[];
 }

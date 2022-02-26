@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsArray } from 'class-validator';
 
 export class CreatePostDto {
   @IsNotEmpty()
@@ -9,8 +9,8 @@ export class CreatePostDto {
   @IsString()
   content: string;
 
-  // @IsString()
-  // picture: string;
+  @IsArray()
+  picture: string[];
 }
 
 export class EditPostDto {
@@ -18,6 +18,6 @@ export class EditPostDto {
   @IsString()
   content: string;
 
-  // @IsString()
-  // picture: string;
+  @IsArray()
+  picture: string[];
 }

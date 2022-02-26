@@ -14,6 +14,7 @@ import { Like } from './likes.entity';
 import * as bcrypt from 'bcryptjs';
 import { Todo } from './todos.entity';
 import { Mail } from './mails.entity';
+import { Flash } from './flashes.entity';
 
 @Entity('users')
 export class User {
@@ -32,19 +33,22 @@ export class User {
   @Column({ type: 'varchar', length: 100 })
   password: string;
 
-  @Column({ type: 'varchar', length: 250 })
+  @Column({ type: 'varchar', length: 250, default: 'よろしくおねがいします' })
   introduction: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
-  will: string;
+  @Column('boolean', { default: false })
+  will: boolean;
 
   @Column({ type: 'mediumtext', nullable: true })
   movie: string;
 
   @Column({ type: 'varchar', nullable: true })
-  picture: string;
+  icon: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ type: 'simple-array' })
+  picture: string[];
+
+  @Column({ type: 'varchar', length: 100, default: 'other' })
   gender: string;
 
   @Column({ nullable: true })
@@ -133,6 +137,9 @@ export class User {
 
   @OneToMany(() => Mail, (mail) => mail.recipient)
   mails2: Mail[];
+
+  @OneToMany(() => Flash, (flash) => flash.user)
+  flash: Flash[];
 
   @OneToMany(() => Todo, (todo) => todo.user)
   @JoinTable()

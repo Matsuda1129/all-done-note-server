@@ -5,9 +5,32 @@ import Faker from 'faker';
 define(Todo, (faker: typeof Faker) => {
   const groupArry = ['お金', 'やりたいこと', '準備'];
   const groupOne = groupArry[Math.floor(Math.random() * groupArry.length)];
-  const moneyArry = ['収入'];
-  const todoArry = ['旅行', '趣味', 'やりたいこと'];
-  const preparationArry = ['葬儀', '学費', '保険'];
+  const moneyArry = [
+    '生活費',
+    '家賃',
+    '結婚',
+    '介護',
+    '投資',
+    '車',
+    '出産',
+    '緊急資金',
+    '食費',
+    '衣服',
+  ];
+  const todoArry = [
+    '旅行',
+    'アニメ',
+    'ゲーム',
+    '筋トレ',
+    '野球',
+    'サッカー',
+    '登山',
+    'キャンプ',
+    '料理',
+    '家庭菜園',
+    '英語',
+  ];
+  const preparationArry = ['葬儀', '学費', '保険', '資産相続', '遺書', '身辺整理', '家族生活費'];
   const finished = [true, false];
   let genreOne;
   if (groupOne === 'お金') {

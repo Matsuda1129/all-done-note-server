@@ -42,7 +42,6 @@ export class CommentsController {
     @Query('limit', new DefaultValuePipe(50), ParseIntPipe) limit: number,
     @Param('postId') postId: number,
   ): Promise<Pagination<Comment>> {
-    console.log(postId);
     limit = limit > 100 ? 100 : limit;
     const result = this.commentService.paginate(
       {

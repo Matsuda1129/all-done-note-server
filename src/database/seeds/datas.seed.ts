@@ -14,8 +14,8 @@ export default class CreateDate implements Seeder {
     await factory(User)().createMany(500);
     await factory(PostEntity)().createMany(1000);
     await factory(Like)().createMany(10000);
-    await factory(Follower)().createMany(1000);
-    await factory(Todo)().createMany(5000);
+    await factory(Follower)().createMany(10000);
+    await factory(Todo)().createMany(10000);
     await factory(Information)().createMany(100);
     await factory(Comment)().createMany(10000);
     await factory(Mail)().createMany(10000);
