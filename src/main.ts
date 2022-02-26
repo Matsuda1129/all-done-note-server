@@ -15,7 +15,7 @@ async function bootstrap() {
   );
   app.use(cookieParser());
   app.enableCors({
-    // origin: 'https://all-done-note-front-git-develop4-matsuda1129.vercel.app',
+    // origin: 'https://all-done-note-front-ntd6w6kwk-matsuda1129.vercel.app',
     // origin: 'https://all-done-note-front.vercel.app',
     origin: 'http://localhost:3000',
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept,Authorization',
