@@ -22,7 +22,7 @@ async function bootstrap() {
     credentials: true,
   });
   app.use(pagination);
-  await app.listen(8000);
+  await app.listen(3000);
   logger.log(`Server is running in ${await app.getUrl()}`);
 }
 bootstrap();
