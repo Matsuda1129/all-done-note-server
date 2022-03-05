@@ -6,7 +6,6 @@ import { pagination } from 'typeorm-pagination';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   const logger = new Logger();
   app.useGlobalPipes(
     new ValidationPipe({
@@ -15,14 +14,12 @@ async function bootstrap() {
   );
   app.use(cookieParser());
   app.enableCors({
-    // origin: 'https://all-done-note-front-ntd6w6kwk-matsuda1129.vercel.app',
-    // origin: 'https://all-done-note-front.vercel.app',
-    origin: 'http://localhost:3000',
+    origin: `${process.env.ORIGIN_URL}`,
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept,Authorization',
     credentials: true,
   });
   app.use(pagination);
-  await app.listen(8000);
+  await app.listen(3000);
   logger.log(`Server is running in ${await app.getUrl()}`);
 }
 bootstrap();

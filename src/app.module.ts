@@ -14,7 +14,7 @@ import { FlashesModule } from './flashes/flashes.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [`.env/${process.env.NODE_ENV}.env`, '.env/default.env'],
+      envFilePath: [`.env/${process.env.NODE_ENV}.env`, '.env/prod.env'],
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
