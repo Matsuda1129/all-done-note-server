@@ -42,7 +42,7 @@ export class User {
   @Column({ type: 'mediumtext', nullable: true })
   movie: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', default: 'treeIcon.jpg' })
   icon: string;
 
   @Column({ type: 'simple-array' })
@@ -54,7 +54,7 @@ export class User {
   @Column({ nullable: true })
   birthday: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: 0 })
   age: number;
 
   @Column({ nullable: true })
@@ -90,31 +90,31 @@ export class User {
   @Column('boolean', { default: false })
   openDataAfterDie: boolean;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: 'その他サービス業' })
   job: string;
 
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   goalMoney1: number;
 
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   goalMoney2: number;
 
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   goalMoney1Percent: number;
 
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   goalMoney2Percent: number;
 
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   allPercent: number;
 
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   preparationPercent: number;
 
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   moneyPercent: number;
 
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   todoPercent: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })

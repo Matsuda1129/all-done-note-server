@@ -1,10 +1,12 @@
+require('dotenv').config({ path: `.env/${process.env.NODE_ENV}.env` });
+
 module.exports = {
   type: 'mysql',
-  host: '127.0.0.1',
-  port: 3306,
-  username: 'takuya',
-  password: 'secret',
-  database: 'all_done_note',
+  host: process.env.DB_HOSTNAME,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
   entities: ['src/database/entities/**/*.ts'],
