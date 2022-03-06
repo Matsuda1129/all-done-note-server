@@ -11,6 +11,9 @@ https://all-done-note-dev-picture-bucket.s3.ap-northeast-1.amazonaws.com/alldone
 
 # Usage
 npm install
+
 docker-compose build
+
 docker-compose up
+
 npm run seed:run:dev   create data, please check .src/database/seeds/datas.seed.ts. adjust 
